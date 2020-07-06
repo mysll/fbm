@@ -22,4 +22,6 @@ class LeisuSpider(scrapy.Spider):
 
     def day_list(self, response):
         start = response.meta['time']
-        print('grab data:', start, response.text)
+        #print('grab data:', start, response.text)
+        with open("list.html", 'w') as f:
+            f.write(response.text)
