@@ -128,3 +128,36 @@ HTTPERROR_ALLOWED_CODES = [403]
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 LOG_LEVEL = 'ERROR'
+
+FEED_URI = 'odd.csv'
+FEED_FORMAT = 'csv'
+FEED_EXPORTERS = {
+    'csv':'leisu.spiders.csv_item_exporter.LeisuCsvItemExporter' 
+}
+
+EXPORT_FIELDS = [
+    'match_time',
+    'jc_order',
+    'league',
+    'home_team',
+    'away_team',
+    'score',
+    'bet365',
+    'hg',
+    'bet10',
+    'lb',
+    'ms',
+    'ac',
+    'snai',
+    'wl',
+    'ysb',
+    'wd',
+    'iw',
+    'bet12',
+    'lj',
+    'yh',
+    'bet18',
+    'jc',
+    'ybb',
+    'pb',
+]

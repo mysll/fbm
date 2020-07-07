@@ -35,19 +35,18 @@ class LeisuSpider(scrapy.Spider):
             score = div_sel('*/span[@class="lab-score color-red"]/span[@class="score"]/b/text()').extract()
             item = LeisuItem()
             item['match_time']=start.strftime("%Y%m%d")
-            item['jc']='' if len(jc)==0 else jc[0].strip()
+            item['jc_order']='' if len(jc)==0 else jc[0].strip()
             item['league']= '' if len(league_name)==0 else league_name[0].strip()
             item['home_team']='' if len(home_team)==0 else home_team[0].strip()
             item['away_team']='' if len(away_team)==0 else away_team[0].strip()
             item['score']='' if len(score)==0 else score[0].strip()
             url = self.detail_url % match
             yield scrapy.Request(url, meta={'item': item}, callback=self.parse_detail)
-            break
 
     def parse_detail(self, response):
         item = response.meta['item']
         sel = response.xpath
-        comps = [comp for comp in sel('//div[contains(@class, "select-company")]/div[@class="down"]/ul/li[not(@class)]/@data-value').extract()]
+        comps = [comp.strip() for comp in sel('//div[contains(@class, "select-company")]/div[@class="down"]/ul/li[not(@class)]/@data-value').extract()]
         odds = {}
         for comp in comps:
             tr = sel('//tr[@data-id="'+comp+'"]/td[contains(@class,"bd-left")]/div[@class="begin float-left w-bar-100 bd-bottom p-b-8 color-999 m-b-8"]/span[@class="float-left col-3"]/text()').extract()
@@ -57,7 +56,8 @@ class LeisuSpider(scrapy.Spider):
                 if odd=='-':
                     check = False
             if check:
-                odds[comp]=comp_odd
-        item['odds']=odds
-        print('item', item)
+                item.save_odd(comp,comp_odd)
+        #item['odds']=odds
+        #print('item', item)
+        yield item
 
