@@ -28,6 +28,10 @@ class FBM():
                       loss='binary_crossentropy', metrics=['accuracy'])
         return model
 
+    def predict(self, x, file):
+        self.model.load_weights(file)
+        return self.model.predict(x)
+
     def train(self, x, y):
         x_train, x_test, y_train, y_test = train_test_split(
             x, y, test_size=0.25, random_state=33)
