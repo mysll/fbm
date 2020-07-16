@@ -105,8 +105,9 @@ def sample(df, label):
         df_one = shuffle(df_one).head(zero_count)
     else:
         df_zero = shuffle(df_zero).head(zero_count)
-    
+
     return shuffle(pd.concat([df_one, df_zero], ignore_index=True))
+
 
 def train_win():
     header_companies = []
@@ -176,4 +177,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
