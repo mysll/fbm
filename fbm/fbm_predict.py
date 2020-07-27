@@ -19,8 +19,8 @@ class FBM():
 
     def create_model(self):
         input = Input(shape=(self.features,))
-        x = Dense(20, activation='relu')(input)
-        x = Dense(10, activation='relu')(x)
+        x = Dense(60, activation='relu')(input)
+        x = Dense(60, activation='relu')(x)
         out = Dense(1, activation='sigmoid')(x)
         model = Model(inputs=[input], outputs=[out])
         model.summary()
@@ -35,7 +35,7 @@ class FBM():
     def train(self, x, y):
         x_train, x_test, y_train, y_test = train_test_split(
             x, y, test_size=0.25, random_state=33)
-        history = self.model.fit(x_train, y_train, batch_size=100, epochs=100, validation_data=(x_test, y_test), callbacks=self.callbacks_list)
+        history = self.model.fit(x_train, y_train, batch_size=100, epochs=50, validation_data=(x_test, y_test), callbacks=self.callbacks_list)
         y_pred = self.model.predict(x_test)
         print(classification_report(y_test, y_pred.round()))
         history_dict = history.history

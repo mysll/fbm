@@ -71,11 +71,11 @@ def wash_data():
     info['y3'] = info.apply(
         lambda x: 1 if x['home_score'] >= x['away_score'] else 0, axis=1)
     info['y4'] = info.apply(
-        lambda x: 1 if x['home_score'] + x['let_min'] >= x['away_score'] else 0, axis=1)
+        lambda x: 1 if x['home_score'] - x['let_min'] >= x['away_score'] else 0, axis=1)
     info['y5'] = info.apply(
-        lambda x: 1 if x['home_score'] + x['let_avg'] >= x['away_score'] else 0, axis=1)
+        lambda x: 1 if x['home_score'] - x['let_avg'] >= x['away_score'] else 0, axis=1)
     info['y6'] = info.apply(
-        lambda x: 1 if x['home_score'] + x['let_max'] >= x['away_score'] else 0, axis=1)
+        lambda x: 1 if x['home_score'] - x['let_max'] >= x['away_score'] else 0, axis=1)
     info['y7'] = info.apply(
         lambda x: 1 if x['home_score'] + x['away_score'] > x['size_min'] else 0, axis=1)
 
@@ -170,8 +170,8 @@ def train_size():
 def main():
     # wash_data()
     # train_win()
-    # train_let('y5')
-    train_size()
+    train_let('y6')
+    # train_size()
     # train_draw()
 
 
